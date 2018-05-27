@@ -1,0 +1,72 @@
+Setting up GPG and Signing with Github.
+
+First we need to setup homebrew run the following command in Terminal:
+
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+Once this completes, you will now need to setup a GPG key:
+
+Open Terminal, run the following command:
+
+gpg --expert --full-generate-key
+
+Select option 8 for RSA, set your own capabilities. Be sure to select 4096 when you can, this as strongest gpg supports.
+
+When prompted for your name it is typically best practices to use common name for your outgoing mail. I will refer to it
+as $email from this point onward. You will also need to define it during the setup so it would be name@site.com for key.
+
+
+You can also use https://gpgtools.org in order to have a slightly easier setup and user experience.
+
+** Proton Mail users looking to export keys you will need to use the following URL from Proton Mail to sign in:
+https://beta.protonmail.com/login
+
+Once logged in select keys -> select your account and you can choose to export private key. Do note if you export the key
+you will need to define a password before encrypting it to be exported. These prompts are self explanatory.
+
+
+Once you have your key setup we will set up the following to set your Github account to GPG sign commits, this will also allow
+for commits in your IDE to also sign your commits for convenience.
+
+$ git config --global user.name "$githubusername"
+$ git config --global user.email "$email"
+** Note the email listed is the one tied to your gpg key.
+
+Next we will look at the keys to get key id to associate with the git user:
+
+$gpg --list-secret-keys --keyid-format LONG
+
+You will get similar output:
+
+------------------------------------
+sec   4096R/$KEYID 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot
+ssb   4096R/42B317FD4BA89E7A 2016-03-10
+
+You will then perform the following command to define the key to use with git user:
+
+$git config --global user.signingkey $KEYID
+
+** KEYID is unique per key, be mindful
+** If you wish to stop here and test do so by running the following command(inside of a repo you can commit to)
+
+$ git add . && git commit -S -m "$commitmessage" && git push
+
+You will be prompted for the password to your key, also note you will be able to view repo in web browser and see a verified tag next to commit.
+
+Now on to the last steps:
+
+$brew install pinentry-mac
+
+$git config --global commit.gpgsign true
+
+$git config --global gpg.program gpg
+
+** The above commands install pinnetry for mac as well as define signing as true for commit and gpg program to use.
+
+The last two commands will allow for the signing to occur on any usage of git. Enjoy!
+
+$echo no-tty > ~/.gnupg/gpg.conf
+
+$echo "pinentry-program /usr/local/bin/pinentry-mac" ~/.gnupg/gpg-agent.conf
+

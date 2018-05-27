@@ -1,0 +1,39 @@
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$"
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export HISTTIMEFORMAT=' {%F|%T} '
+export HISTSIZE=10000
+alias ls='ls -GFh'
+PATH=$PATH:/usr/local/bin:/usr/local/sbin
+################################################
+# reload profile
+################################################
+alias reload-profile='source ~/.bash_profile'
+################################################################
+# Cpan Shell
+################################################################
+alias cpan='perl -MCPAN -e shell'
+EDITOR=/usr/bin/vim
+#########################################################################
+# Alias for show hiddenfiles
+########################################################################
+alias show-hidden='defaults write com.apple.finder AppleShowAllFiles -bool YES'
+alias hide-hidden='defaults write com.apple.finder AppleShowAllFiles -bool NO'
+##########################################################################
+alias reset_dns='sudo killall -HUP mDNSResponder && echo macOS DNS Cache Reset'
+##########################################################################
+# Touchbar clear data
+#########################################################################
+alias touchbar-erase='xartutil --erase-alli && sudo reboot'
+###################################################
+alias show-all-files='defaults write com.apple.finder AppleShowAllFiles TRUE'
+# Show location in finder
+###################################################
+alias show-finder-location='defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES'\
+########################################################################
+# Below is a way to turn off thermal stepping.
+#alias nvram-set2=' sudo nvram boot-args="vm_compressor=2"'
+#Turn to vm_compressor=4 to renable stepping
+############################################
+# Kill metadata server
+sudo killall mds
