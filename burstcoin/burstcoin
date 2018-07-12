@@ -1,0 +1,75 @@
+  How to burstcoin:
+
+
+  Set up brew:
+
+  https://brew.sh
+
+  or execute this command in your terminal:
+
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+
+  Now run the following in terminal:
+
+  brew update && brew upgrade
+
+  brew tap caskroom/versions
+
+  brew cask install java8
+
+  brew install mariadb
+
+  mysql -u root -p
+
+  In the mysql shell execute the following:
+
+  CREATE DATABASE burstwallet;
+
+  CREATE USER 'burstwallet'@'localhost' IDENTIFIED BY '$password_you_choose'';
+
+  GRANT ALL PRIVILEGES ON burstwallet.* TO 'burstwallet'@'localhost’;
+
+  exit
+
+  Once completed run the following commands:
+
+  cd ~/
+
+  mkdir burstcoin && cd burstcoin
+
+  wget https://github.com/PoC-Consortium/burstcoin/releases/download/2.2.1/burstcoin-2.2.1.zip
+
+  unzip burstcoin-2.2.1.zip
+
+  cd burstcoin-2-2.1
+
+  chmod a+x burst.sh
+
+  cp -rp conf/brs-default.properties conf/brs.properties
+
+  echo "DB.Url=jdbc:mariadb://localhost:3306/burstwallet" >> conf/brs.properties
+
+  echo "DB.Username=burstwallet" >> conf/brs.properties
+
+  echo "DB.Password=$password_you_choose" >> conf/brs.properties
+
+  Now we are ready to start, but we can also add an alias if you want please run following to be even lazier:
+
+  echo "alias burstcoind='~/burstcoin/burst.sh'" >> ~/.bash_profile
+
+  Now you will need to source in the profile:
+
+  source ~/.bash_profile
+
+  Now execute the following command:
+
+  burstcoind
+
+  This will be the command you can always use, if you chose not to use alias run the following command in your terminal:
+
+  ~/burstcoin/burst.sh
+
+  Paths may be slightly different but this is how i typically set it up on a mac :)
+
+  ENJOY!
